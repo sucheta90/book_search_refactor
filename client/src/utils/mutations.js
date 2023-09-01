@@ -13,29 +13,29 @@ export const LOGIN_USER = gql`
 `;
 
 export const ADD_USER = gql`
-  mutation addUser($username: String!, $email: String!, $password: String!) {
+  mutation AddUser($username: String!, $email: String!, $password: String!) {
     addUser(username: $username, email: $email, password: $password) {
       user {
         email
         password
         username
       }
-      token
     }
   }
 `;
 
-// export const SAVE_BOOK = gql`
-//   mutation Mutation {
-//     saveBook {
-//       savedBooks {
-//         description
-//         authors
-//         title
-//         bookId
-//         image
-//         link
-//       }
-//     }
-//   }
-// `;
+export const SAVE_BOOK = gql`
+  mutation SaveBook($book: BookData) {
+    saveBook(book: $book) {
+      user
+      savedBooks {
+        authors
+        title
+        description
+        bookId
+        image
+        link
+      }
+    }
+  }
+`;

@@ -36,28 +36,30 @@ const resolvers = {
 
       return { token, user };
     },
-    saveBook: async (
-      parent,
-      { description, bookId, image, link, title, authors },
-      context
-    ) => {
+    saveBook: async (parent, { BookData }, context) => {
       if (context.user) {
-        const book = await new Schema({
-          description,
-          bookId,
-          image,
-          link,
-          title,
-          authors,
-        });
-
-        await User.findOneAndUpdate(
+        const userSavedBook = await User.findOneAndUpdate(
           { _id: context.user._id },
-          { $addToSet: { savedBooks: book._id } },
+          { $push: { savedBooks: BookData } },
           { new: true }
         );
 
-        return User;
+        //   const book = await new Schema({
+        //   description,
+        //   bookId,
+        //   image,
+        //   link,
+        //   title,
+        //   authors,
+        // });
+
+        // await User.findOneAndUpdate(
+        //   { _id: context.user._id },
+        //   { $addToSet: { savedBooks: book._id } },
+        //   { new: true }
+        // );
+
+        return userSavedBook;
       }
       throw AuthenticationError;
       ("You need to be logged in!");
